@@ -1,0 +1,417 @@
+\documentclass[a4,10pt]{aleph-notas}
+
+% -- Paquetes adicionales
+\usepackage{enumitem}
+\usepackage{aleph-comandos}
+
+% -- Datos
+\institucion{Proyecto Alephsub0}
+\asignatura{Complejos simpliciales}
+\tema{Distancia de intercalado}
+\autor{Andrés Merino}
+\fecha{Noviembre 2025}
+
+\fuente{montserrat}
+\logouno[4.5cm]{Logos/LogoAlephsub0-02}
+\definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+
+% -- Comandos adicionales
+\newtheorem*{prob}{Problema}
+    \tcolorboxenvironment{prob}{%
+        color=colordef,recuadrost,colback=colordef!7,drop fuzzy shadow
+    }
+\DeclareMathOperator{\rank}{rank}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta}
+\usetikzlibrary{calc}
+\usetikzlibrary{decorations.markings}
+
+% Paleta de colores más elegante
+\definecolor{petrol}{RGB}{30,90,110}
+\definecolor{granate}{RGB}{150,30,50}
+\definecolor{forest}{RGB}{20,90,40}
+\definecolor{azulon}{RGB}{20,60,120}
+
+\tikzset{
+  midarrow/.style={
+    postaction={decorate},
+    decoration={markings,mark=at position 0.55 with {\arrow{Latex}}}
+  },
+  Vline/.style={petrol},
+  Wline/.style={granate},
+  Uline/.style={azulon},
+  mapline/.style={midarrow}
+}
+
+\begin{document}
+
+\encabezado
+
+Consideremos las siguientes definiciones:
+
+\begin{defi}[Módulo de persistencia]
+Un \emph{módulo de persistencia continuo} $(V,a)$ está conformado por una familia $V = \{V_t\}_{t\in\mathbb{R}}$ de espacios vectoriales 
+junto con una familia de aplicaciones lineales $a = \{a_{s,t}: s,t\in\mathbb{R}, s\leq t \}$ tales que
+\[
+    \func{a_{s,t}}{V_s}{V_t}
+\]
+para todo $s\leq t$, que satisfacen:
+\begin{enumerate}
+    \item $a_{t,t} = \mathrm{id}_{V_t}$ para todo $t\in\mathbb{R}$;
+    \item $a_{s,t}=a_{u,t}\circ a_{s,u}$ siempre que $s \le u \le t$.
+\end{enumerate}
+\end{defi}
+
+\begin{defi}[$\varepsilon$-intercalados]
+Sean $(V,a)$ y $(W,b)$ dos módulos de persistencia continuos. Decimos que $(V,a)$ y $(W,b)$ son
+\emph{$\varepsilon$-intercalados} (\textit{interleaved}) si existen dos familias de aplicaciones lineales $\Phi = \{\Phi_t\}_{t\in\mathbb{R}}$ y $\Psi = \{\Psi_t\}_{t\in\mathbb{R}}$, con
+\[
+\Phi_t : V_t \longrightarrow W_{t+\varepsilon},
+\texty
+\Psi_t : W_t \longrightarrow V_{t+\varepsilon},
+\]
+tales que los diagramas de conmutatividad siguientes se cumplen para todo $s\le t$:
+\begin{center}
+\begin{tikzpicture}[thick]
+    % Puntos
+    \coordinate (Vs) at (0.5,1.5);
+    \coordinate (Vt) at (2.5,1.5);
+    \coordinate (Ws) at (1.0,0);
+    \coordinate (Wt) at (3.0,0);
+    % Líneas superior e inferior
+    \draw[Vline] ($(Vs)+(-0.5,0)$) -- ($(Vt)+(1.0,0)$);
+    \draw[Wline] ($(Ws)+(-1.0,0)$) -- ($(Wt)+(0.5,0)$);
+    % Flechas
+    \draw[petrol,mapline] (Vs) -- (Vt);
+    \node[petrol,below] at ($(Vs)!0.5!(Vt)$) {$a_{s,t}$};
+    \draw[granate,mapline] (Ws) -- (Wt);
+    \node[granate,above] at ($(Ws)!0.5!(Wt)$) {$b_{s+\varepsilon,t+\varepsilon}$};
+    \draw[forest,mapline] (Vs) -- (Ws);
+    \node[forest,left]  at ($(Vs)!0.5!(Ws)$) {$\Phi_s$};
+    \draw[forest,mapline] (Vt) -- (Wt);
+    \node[forest,right] at ($(Vt)!0.5!(Wt)$) {$\Phi_t$};
+    % Puntos sobre las líneas
+    \fill[petrol] (Vs) circle (2pt) node[above] {$V_s$};
+    \fill[petrol] (Vt) circle (2pt) node[above] {$V_t$};
+    \fill[granate] (Ws) circle (2pt) node[below] {$W_{s+\varepsilon}$};
+    \fill[granate] (Wt) circle (2pt) node[below] {$W_{t+\varepsilon}$};
+\end{tikzpicture}
+\hspace{5mm}
+\begin{tikzpicture}[thick]
+    % Puntos
+    \coordinate (Vs) at (1.0,1.5);
+    \coordinate (Vt) at (3.0,1.5);
+    \coordinate (Ws) at (0.5,0);
+    \coordinate (Wt) at (2.5,0);
+    % Líneas superior e inferior
+    \draw[Vline] ($(Vs)+(-1.0,0)$) -- ($(Vt)+(0.5,0)$);
+    \draw[Wline] ($(Ws)+(-0.5,0)$) -- ($(Wt)+(1.0,0)$);
+    % Flechas
+    \draw[petrol,mapline] (Vs) -- (Vt);
+    \node[petrol,below] at ($(Vs)!0.5!(Vt)$) {$a_{s+\varepsilon,t+\varepsilon}$};
+    \draw[granate,mapline] (Ws) -- (Wt);
+    \node[granate,above] at ($(Ws)!0.5!(Wt)$) {$b_{s,t}$};
+    \draw[forest,mapline] (Ws) -- (Vs);
+    \node[forest,left]  at ($(Ws)!0.5!(Vs)$) {$\Psi_s$};
+    \draw[forest,mapline] (Wt) -- (Vt);
+    \node[forest,right] at ($(Wt)!0.5!(Vt)$) {$\Psi_t$};
+    % Puntos sobre las líneas
+    \fill[petrol] (Vs) circle (2pt) node[above] {$V_{s+\varepsilon}$};
+    \fill[petrol] (Vt) circle (2pt) node[above] {$V_{t+\varepsilon}$};
+    \fill[granate] (Ws) circle (2pt) node[below] {$W_s$};
+    \fill[granate] (Wt) circle (2pt) node[below] {$W_t$};
+\end{tikzpicture}
+\hspace{5mm}
+\begin{tikzpicture}[thick]
+    % Puntos
+    \coordinate (Vs) at (1.0,1.5);
+    \coordinate (Vss) at (3.0,1.5);
+    \coordinate (Ws) at (2.0,0);
+    % Líneas superior e inferior
+    \draw[Vline] ($(Vs)+(-0.5,0)$) -- ($(Vss)+(0.5,0)$);
+    \draw[Wline] ($(Ws)+(-1.5,0)$) -- ($(Ws)+(1.5,0)$);
+    % Flechas
+    \draw[petrol,mapline] (Vs) -- (Vss);
+    \node[petrol,below] at ($(Vs)!0.5!(Vss)$) {$a_{s,s+2\varepsilon}$};
+    \draw[forest,mapline] (Vs) -- (Ws);
+    \node[forest,left]  at ($(Vs)!0.5!(Ws)$) {$\Phi_s$};
+    \draw[forest,mapline] (Ws) -- (Vss);
+    \node[forest,right] at ($(Ws)!0.5!(Vss)$) {$\Psi_{s+\varepsilon}$};
+    % Puntos sobre las líneas
+    \fill[petrol] (Vs) circle (2pt) node[above] {$V_s$};
+    \fill[petrol] (Vss) circle (2pt) node[above] {$V_{s+2\varepsilon}$};
+    \fill[granate] (Ws) circle (2pt) node[below] {$W_{s+\varepsilon}$};
+\end{tikzpicture}
+\hspace{5mm}
+\begin{tikzpicture}[thick]
+    % Puntos
+    \coordinate (Ws) at (1.0,0);
+    \coordinate (Wss) at (3.0,0);
+    \coordinate (Vs) at (2.0,1.5);
+    % Líneas superior e inferior
+    \draw[Wline] ($(Ws)+(-0.5,0)$) -- ($(Wss)+(0.5,0)$);
+    \draw[Vline] ($(Vs)+(-1.5,0)$) -- ($(Vs)+(1.5,0)$);
+    % Flechas
+    \draw[granate,mapline] (Ws) -- (Wss);
+    \node[granate,above] at ($(Ws)!0.5!(Wss)$) {$b_{s,s+2\varepsilon}$};
+    \draw[forest,mapline] (Ws) -- (Vs);
+    \node[forest,left]  at ($(Ws)!0.5!(Vs)$) {$\Psi_s$};
+    \draw[forest,mapline] (Vs) -- (Wss);
+    \node[forest,right] at ($(Vs)!0.5!(Wss)$) {$\Phi_{s+\varepsilon}$};
+    % Puntos sobre las líneas
+    \fill[granate] (Ws) circle (2pt) node[below] {$W_s$};
+    \fill[granate] (Wss) circle (2pt) node[below] {$W_{s+2\varepsilon}$};
+    \fill[petrol] (Vs) circle (2pt) node[above] {$V_{s+\varepsilon}$};
+\end{tikzpicture}
+\end{center}
+
+Es decir, para todo $s\le t$ se cumplen las siguientes igualdades:
+\[
+b_{s+\varepsilon,t+\varepsilon} \circ \Phi_s = \Phi_t \circ a_{s,t},
+\quad
+a_{s+\varepsilon,t+\varepsilon} \circ \Psi_s = \Psi_t \circ b_{s,t},
+\quad
+a_{s,t+2\varepsilon} = \Psi_{t+\varepsilon} \circ \Phi_s,
+\quad
+b_{s,t+2\varepsilon} = \Phi_{t+\varepsilon} \circ \Psi_s.
+\]  
+\end{defi}
+
+\begin{defi}[Distancia de intercalado]
+La \emph{distancia de intercalado} entre dos módulos de persistencia continuos $(V,a)$ y $(W,b)$ se define como
+\[
+d_{\mathrm{Int}}\big[(V,a),\,(W,b)\big]
+=
+\inf \{\varepsilon\ge 0 \,:\, (V,a) \text{ y } (W,b) \text{ son } \varepsilon\text{-intercalados}\,\}.
+\]
+\end{defi}
+
+Demostremos que, en efecto, esta definición cumple las propiedades de una seudométrica.
+
+\begin{prob}
+    La distancia de intercalado $d_{\mathrm{Int}}$ es una seudométrica sobre la clase de módulos de persistencia continuos.
+\end{prob}
+
+\begin{proof}
+Sean $(V,a)$, $(W,b)$ y $(U,c)$ módulos de persistencia continuos.
+Demostraremos las tres propiedades: no negatividad, simetría y desigualdad triangular.
+\begin{itemize}
+    \item 
+    \textbf{No negatividad.}
+Por definición, el conjunto sobre el que se toma el ínfimo está contenido en $[0,+\infty)$, de modo que
+\[
+d_{\mathrm{Int}}\big[(V,a),(W,b)\big]\ge 0.
+\]
+
+\item
+\textbf{Simetría.}
+De la definicíon de $\varepsilon$-intercalado, se observa que las condiciones son completamente simétricas al intercambiar los papeles de $\Phi$ y $\Psi$, y al intercambiar $(V,a)$ con $(W,b)$.
+Por tanto, si $(\Phi,\Psi)$ constituye un $\varepsilon$-intercalado de $(V,a)$ a $(W,b)$, entonces $(\Psi,\Phi)$ constituye un $\varepsilon$-intercalado de $(W,b)$ a $(V,a)$. Así,
+\[
+d_{\mathrm{Int}}\big[(V,a),(W,b)\big] = d_{\mathrm{Int}}\big[(W,b),(V,a)\big].
+\]
+
+\item
+\textbf{Desigualdad triangular.}
+Supongamos ahora que:
+\begin{itemize}
+    \item $(V,a)$ y $(W,b)$ son $\varepsilon$-intercalados mediante las familias $\Phi^{VW}$ y $\Psi^{WV}$;
+    \item $(W,b)$ y $(U,c)$ son $\delta$-intercalados mediante las familias aplicaciones $\Phi^{WU}_t$ y $\Psi^{UW}_t$.
+\end{itemize}
+
+Construiremos un $(\varepsilon+\delta)$-intercalado entre $(V,a)$ y $(U,c)$.
+Para cada $t\in\mathbb{R}$ definimos:
+\[
+\Phi^{VU}_t
+=
+\Phi^{WU}_{t+\varepsilon}\circ \Phi^{VW}_t
+\texty
+\Psi^{UV}_t
+=
+\Psi^{WV}_{t+\delta}\circ \Psi^{UW}_t.
+\]
+Con esto, tenemos que los diagramas siguientes conmutan para todo $s\le t$ (se van omitiendo progresivamente los subíndices de las aplicaciones lineales de cada módulo de presistencia):
+\begin{center}
+\def\ep{0.5}   
+\def\del{0.8}    
+\def\hV{3.0}
+\def\hW{1.5}
+\def\hU{0.0}
+\def\Vleft{0.5} 
+\def\Vright{2.5} 
+\def\Uleft{0.2} 
+\def\Uright{2.2}
+\begin{tikzpicture}[thick]
+    % Puntos
+    \coordinate (Vs) at (\Vleft,\hV);
+    \coordinate (Vt) at (\Vright,\hV);
+    \coordinate (Ws) at ({\Vleft+\ep},\hW);
+    \coordinate (Wt) at ({\Vright+\ep},\hW);
+    \coordinate (Us) at ({\Vleft+\ep+\del},\hU);
+    \coordinate (Ut) at ({\Vright+\ep+\del},\hU);
+    % Líneas superior e inferior
+    \draw[Vline] (0,\hV) -- (4,\hV);
+    \draw[Wline] (0,\hW) -- (4,\hW);
+    \draw[Uline] (0,\hU) -- (4,\hU);
+    % Flechas
+    \draw[petrol,mapline] (Vs) -- (Vt);
+    \node[petrol,below] at ($(Vs)!0.5!(Vt)$) {\small$a_{s,t}$};
+    \draw[granate,mapline] (Ws) -- (Wt);
+    \node[granate,above] at ($(Ws)!0.5!(Wt)$) {\small$b_{s+\varepsilon,t+\varepsilon}$};
+    \draw[azulon,mapline] (Us) -- (Ut);
+    \node[azulon,above] at ($(Us)!0.5!(Ut)$) {\small$c_{s+\varepsilon+\delta,t+\varepsilon+\delta}$};
+    \draw[forest,mapline] (Vs) -- (Ws);
+    \node[forest,left]  at ($(Vs)!0.5!(Ws)$) {\small$\Phi^{VW}_s$};
+    \draw[forest,mapline] (Vt) -- (Wt);
+    \node[forest,right] at ($(Vt)!0.5!(Wt)$) {\small$\Phi^{VW}_t$};
+    \draw[forest,mapline] (Ws) -- (Us);
+    \node[forest,left]  at ($(Ws)!0.5!(Us)$) {\small$\Phi^{WU}_{s+\varepsilon}$};
+    \draw[forest,mapline] (Wt) -- (Ut);
+    \node[forest,right] at ($(Wt)!0.5!(Ut)$) {\small$\Phi^{WU}_{t+\varepsilon}$};
+    % Puntos sobre las líneas
+    \fill[petrol] (Vs) circle (2pt) node[above] {$V_s$};
+    \fill[petrol] (Vt) circle (2pt) node[above] {$V_t$};
+    \fill[granate] (Ws) circle (2pt) node[below left] {\small$W_{s+\varepsilon}$};
+    \fill[granate] (Wt) circle (2pt) node[below right] {\small$W_{t+\varepsilon}$};
+    \fill[azulon] (Us) circle (2pt) node[below] {$U_{s+\varepsilon+\delta}$};
+    \fill[azulon] (Ut) circle (2pt) node[below] {$U_{t+\varepsilon+\delta}$};
+\end{tikzpicture}
+\hspace{15mm}
+\begin{tikzpicture}[thick]
+    % Puntos
+    \coordinate (Us) at (\Uleft,\hU);
+    \coordinate (Ut) at (\Uright,\hU);
+    \coordinate (Ws) at ({\Uleft+\del},\hW);
+    \coordinate (Wt) at ({\Uright+\del},\hW);
+    \coordinate (Vs) at ({\Uleft+\del+\ep},\hV);
+    \coordinate (Vt) at ({\Uright+\del+\ep},\hV);
+    % Líneas superior e inferior
+    \draw[Vline] (0,\hV) -- (4,\hV);
+    \draw[Wline] (0,\hW) -- (4,\hW);
+    \draw[Uline] (0,\hU) -- (4,\hU);
+    % Flechas
+    \draw[petrol,mapline] (Vs) -- (Vt);
+    \node[petrol,below] at ($(Vs)!0.5!(Vt)$) {\small$a_{s+\varepsilon+\delta,t+\varepsilon+\delta}$};
+    \draw[granate,mapline] (Ws) -- (Wt);
+    \node[granate,above] at ($(Ws)!0.5!(Wt)$) {\small$b_{s+\delta,t+\delta}$};
+    \draw[azulon,mapline] (Us) -- (Ut);
+    \node[azulon,above] at ($(Us)!0.5!(Ut)$) {\small$c_{s,t}$};
+    \draw[forest,mapline] (Ws) -- (Vs);
+    \node[forest,left]  at ($(Ws)!0.5!(Vs)$) {\small$\Psi^{WV}_{s+\delta}$};
+    \draw[forest,mapline] (Wt) -- (Vt);
+    \node[forest,right] at ($(Wt)!0.5!(Vt)$) {\small$\Psi^{WV}_{t+\delta}$};
+    \draw[forest,mapline] (Us) -- (Ws);
+    \node[forest,left]  at ($(Us)!0.5!(Ws)$) {\small$\Psi^{UW}_s$};
+    \draw[forest,mapline] (Ut) -- (Wt);
+    \node[forest,right] at ($(Ut)!0.5!(Wt)$) {\small$\Psi^{UW}_t$};
+    % Puntos sobre las líneas
+    \fill[petrol] (Vs) circle (2pt) node[above] {$V_{s+\varepsilon+\delta}$};
+    \fill[petrol] (Vt) circle (2pt) node[above] {$V_{t+\varepsilon+\delta}$};
+    \fill[granate] (Ws) circle (2pt) node[below left] {\small$W_{s+\delta}$};
+    \fill[granate] (Wt) circle (2pt) node[below right] {\small$W_{t+\delta}$};
+    \fill[azulon] (Us) circle (2pt) node[below] {$U_s$};
+    \fill[azulon] (Ut) circle (2pt) node[below] {$U_t$};
+\end{tikzpicture}
+\\[5mm]
+\def\ep{0.8}   
+\def\del{1.2}  
+\begin{tikzpicture}[thick]
+    % Puntos
+    \coordinate (Vs) at (\Vleft,\hV);
+    \coordinate (Vss) at ({\Vleft+2*\del},\hV);
+    \coordinate (Vsss) at ({\Vleft+2*\ep+2*\del},\hV);
+    \coordinate (Ws) at ({\Vleft+\ep},\hW);
+    \coordinate (Wss) at ({\Vleft+\ep+2*\del},\hW);
+    \coordinate (Us) at ({\Vleft+\ep+\del},\hU);
+    % Líneas superior e inferior
+    \draw[Vline] (0,\hV) -- (5,\hV);
+    \draw[Wline] (0,\hW) -- (5,\hW);
+    \draw[Uline] (0,\hU) -- (5,\hU);
+    % Flechas
+    \draw[forest,mapline] (Vs) -- (Ws);
+    \node[forest,left]  at ($(Vs)!0.5!(Ws)$) {\small$\Phi^{VW}_s$};
+    \draw[forest,mapline] (Ws) -- (Us);
+    \node[forest,left] at ($(Ws)!0.5!(Us)$) {\small$\Phi^{WU}_{s+\varepsilon}$};
+    \draw[forest,mapline] (Us) -- (Wss);
+    \node[forest,right]  at ($(Us)!0.5!(Wss)$) {\small$\Psi^{UW}_{s+\varepsilon+\delta}$};
+    \draw[forest,mapline] (Wss) -- (Vsss);
+    \node[forest,right] at ($(Wss)!0.5!(Vsss)$) {\small$\Phi^{WV}_{s+\varepsilon+2\delta}$};
+    \draw[forest,mapline] (Vss) -- (Wss);
+    \node[forest,left] at ($(Vss)!0.5!(Wss)$) {\small$\Psi^{WV}_{s+\varepsilon+\delta}$};
+    \draw[granate,mapline] (Ws) -- (Wss);
+    \node[granate,above] at ($(Ws)!0.5!(Wss)$) {\small$b_{s+\varepsilon,s+\varepsilon+2\delta}$};
+    \draw[petrol,mapline] (Vs) -- (Vss);
+    \node[petrol,below] at ($(Vs)!0.5!(Vss)$) {\small$a_{s,s+2\delta}$};
+    \draw[petrol,mapline] (Vss) -- (Vsss);
+    \node[petrol,below] at ($(Vss)!0.5!(Vsss)$) {\small$a_{\cdot,\cdot}$};
+    % Puntos sobre las líneas
+    \fill[petrol] (Vs) circle (2pt) node[above] {$V_s$};
+    \fill[granate] (Ws) circle (2pt) node[below left] {\small$W_{s+\varepsilon}$};
+    \fill[azulon] (Us) circle (2pt) node[below] {$U_{s+\varepsilon+\delta}$};
+    \fill[granate] (Wss) circle (2pt) node[below right] {\small$W_{s+\varepsilon+2\delta}$};
+    \fill[petrol] (Vsss) circle (2pt) node[above] {$V_{s+2\varepsilon+2\delta}$};
+    \fill[petrol] (Vss) circle (2pt) node[above] {$V_{s+2\delta}$};
+\end{tikzpicture}
+\hspace{10mm}
+\begin{tikzpicture}[thick]
+    % Puntos
+    \coordinate (Us) at (\Uleft,\hU);
+    \coordinate (Uss) at ({\Uleft+2*\ep},\hU);
+    \coordinate (Usss) at ({\Uleft+2*\ep+2*\del},\hU);
+    \coordinate (Ws) at ({\Uleft+\del},\hW);
+    \coordinate (Wss) at ({\Uleft+\del+2*\ep},\hW);
+    \coordinate (Vs) at ({\Uleft+\del+\ep},\hV);
+    % Líneas superior e inferior
+    \draw[Vline] (0,\hV) -- (5,\hV);
+    \draw[Wline] (0,\hW) -- (5,\hW);
+    \draw[Uline] (0,\hU) -- (5,\hU);
+    % Flechas
+    \draw[forest,mapline] (Us) -- (Ws);
+    \node[forest,left]  at ($(Us)!0.5!(Ws)$) {\small$\Psi^{UW}_\cdot$};
+    \draw[forest,mapline] (Ws) -- (Vs);
+    \node[forest,left] at ($(Ws)!0.5!(Vs)$) {\small$\Psi^{WV}_{\cdot}$};
+    \draw[forest,mapline] (Vs) -- (Wss);
+    \node[forest,right]  at ($(Vs)!0.5!(Wss)$) {\small$\Phi^{VW}_{\cdot}$};
+    \draw[forest,mapline] (Wss) -- (Usss);
+    \node[forest,right] at ($(Wss)!0.5!(Usss)$) {\small$\Phi^{WU}_{\cdot}$};
+    \draw[forest,mapline] (Uss) -- (Wss);
+    \node[forest,left] at ($(Uss)!0.5!(Wss)$) {\small$\Psi^{WU}_{\cdot}$};
+    \draw[granate,mapline] (Ws) -- (Wss);
+    \node[granate,above] at ($(Ws)!0.5!(Wss)$) {\small$b_{\cdot,\cdot}$};
+    \draw[azulon,mapline] (Us) -- (Uss);
+    \node[azulon,below] at ($(Us)!0.5!(Uss)$) {\small$c_{\cdot,\cdot}$};
+    \draw[azulon,mapline] (Uss) -- (Usss);
+    \node[azulon,below] at ($(Uss)!0.5!(Usss)$) {\small$c_{\cdot,\cdot}$};
+    % Puntos sobre las líneas
+    \fill[azulon] (Us) circle (2pt) node[below] {$U_s$};
+    \fill[granate] (Ws) circle (2pt) node[above left] {\small$W_{s+\delta}$};
+    \fill[petrol] (Vs) circle (2pt) node[above] {$V_{s+\varepsilon+\delta}$};
+    \fill[granate] (Wss) circle (2pt) node[above right] {\small$W_{s+2\varepsilon+\delta}$};
+    \fill[azulon] (Usss) circle (2pt) node[below] {$U_{s+2\varepsilon+2\delta}$};
+    \fill[azulon] (Uss) circle (2pt) node[below] {$U_{s+2\varepsilon}$};
+\end{tikzpicture}
+\end{center}
+
+Concluimos que $(\Phi^{VU},\Psi^{UV})$ define un $(\varepsilon+\delta)$-intercalado entre $(V,a)$ y $(U,c)$.  
+Por lo tanto:
+\[
+d_{\mathrm{Int}}[(V,a),(U,c)] \le \varepsilon+\delta.
+\]
+
+Tomando ínfimos sobre todos los posibles $\varepsilon$ y $\delta$ obtenemos la desigualdad triangular:
+\[
+d_{\mathrm{Int}}[(V,a),(U,c)]
+\le
+d_{\mathrm{Int}}[(V,a),(W,b)]
++
+d_{\mathrm{Int}}[(W,b),(U,c)].
+\]
+
+\medskip
+
+Puesto que se verifican no negatividad, simetría y desigualdad triangular, la función $d_{\mathrm{Int}}$ es una seudométrica.
+\end{itemize}
+
+\end{proof}
+
+\end{document}

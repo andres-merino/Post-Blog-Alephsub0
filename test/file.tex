@@ -1,0 +1,84 @@
+\documentclass[a4,10pt]{aleph-notas}
+
+% -- Paquetes adicionales
+\usepackage{enumitem}
+\usepackage{aleph-comandos}
+
+% -- Datos del libro
+\institucion{Proyecto Alephsub0}
+% \carrera{}
+\asignatura{Teoría de la Medida}
+\tema{Ejercicio de prueba}
+\autor{Andrés Merino}
+% \fecha{Abril 2024}
+\fuente{montserrat}
+
+
+%% --> Logos de las guias
+\logouno[4.5cm]{Logos/LogoAlephsub0-02}
+\definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+
+
+% -- Comandos adicionales
+\newcommand{\A}{\mathcal{A}}
+\newcommand{\B}{\mathcal{B}}
+\renewcommand{\C}{\mathcal{C}}
+
+\begin{document}
+
+\encabezado
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{ejer}
+    Enunciado del ejercicio. Sea $\A \in \B$. $\sen(x)$ $\dlim_{x\to 0} f(x)$.
+\end{ejer}
+
+
+Aquí vamos a probar algunas cosas. Los símbolos como 
+\[
+    \funcion{f}{\R}{\R}{x}{x^2}
+\]
+Por otro lado, símbolos $a<b$ o $a>b$, $\dfrac{a}{b}$. Un \texttt{align}:
+\begin{align*}
+    a &= b\\
+    c &= d
+\end{align*}
+Y probemos una referencia a la ecuación \eqref{eq:1}.
+
+También probemos texto en \text{negritas} y \textit{cursivas}. Y una lista:
+\begin{itemize}
+    \item Primer elemento.
+    \item Segundo elemento.
+    \item Tercer elemento.
+\end{itemize}
+Y una tabla:
+\begin{center}
+    \begin{tabular}[h]{|c|c|}
+        \hline
+        $a$ & $b$\\
+        \hline
+        $c$ & $d$\\
+        \hline
+    \end{tabular}
+\end{center}
+
+
+
+\begin{ejer}
+    Enunciado del ejercicio. Sea $\A \in \B$. $\sen(x)$ $\dlim_{x\to 0} f(x)$.
+\end{ejer}
+
+\begin{proof}
+    Redacción de la demostración.\qedhere
+\end{proof}
+
+Esta es la ecuación:
+\begin{equation}
+    a = b.
+    \label{eq:1}
+\end{equation}
+
+\end{document}

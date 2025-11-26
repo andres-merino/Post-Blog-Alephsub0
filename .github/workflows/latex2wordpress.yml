@@ -1,0 +1,58 @@
+name: LaTeX2WordPress Automation
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  PROBLEMA_PATH: ./Otros/MetricaInterliving.tex
+  USUARIO: ${{ secrets.USUARIO }}
+  USUARIO_SERV: ${{ secrets.USUARIO_SERV }}
+  CONTRASENIA_SERV: ${{ secrets.CONTRASENIA_SERV }}
+  CONTRASENIA: ${{ secrets.CONTRASENIA }}
+  CLOUDFLARE_ZONE_ALEPH: ${{ secrets.CLOUDFLARE_ZONE_ALEPH }}
+  CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+  CLOUDFLARE_CORREO: ${{ secrets.CLOUDFLARE_CORREO }}
+  WP_URL: ${{ vars.WP_URL }}
+
+jobs:
+  run-latex2wordpress:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Install Pandoc 3.5
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget gdebi-core
+        wget https://github.com/jgm/pandoc/releases/download/3.5/pandoc-3.5-1-amd64.deb
+        sudo gdebi --non-interactive pandoc-3.5-1-amd64.deb
+
+    - name: Verify Pandoc installation
+      run: pandoc --version
+      
+    - name: Move files to home directory
+      run: |
+        cp LaTeX2WordPress.py $HOME/LaTeX2WordPress.py
+        cp $PROBLEMA_PATH $HOME/Problema.tex
+        cp ./Portada.jpeg $HOME/Portada.jpeg
+        cp ./aleph-comandos.sty $HOME/aleph-comandos.sty
+        cp ./aleph-notas.cls $HOME/aleph-notas.cls
+
+    - name: Run LaTeX2WordPress script
+      run: |
+        echo "Running LaTeX2WordPress with user $USUARIO"
+        python $HOME/LaTeX2WordPress.py $HOME/Problema.tex $HOME/Portada.jpeg

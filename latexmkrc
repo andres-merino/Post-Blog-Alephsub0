@@ -1,0 +1,1 @@
+END { system('convert -density 400 -background white -flatten output.pdf Portada.jpeg'); }

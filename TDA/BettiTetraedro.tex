@@ -1,0 +1,296 @@
+\documentclass[a4,10pt]{aleph-notas}
+
+% -- Paquetes adicionales
+\usepackage{enumitem}
+\usepackage{aleph-comandos}
+
+% -- Datos
+\institucion{Proyecto Alephsub0}
+\asignatura{Complejos simpliciales}
+\tema{Homología de un tetraedro hueco}
+\autor{Andrés Merino}
+\fecha{Noviembre 2025}
+
+\fuente{montserrat}
+\logouno[4.5cm]{Logos/LogoAlephsub0-02}
+\definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+
+% -- Comandos adicionales
+\newtheorem*{prob}{Problema}
+    \tcolorboxenvironment{prob}{%
+        color=colordef,recuadrost,colback=colordef!7,drop fuzzy shadow
+    }
+\DeclareMathOperator{\rank}{rank}
+\usepackage{tikz}
+
+\begin{document}
+
+\encabezado
+
+\noindent Consideremos las definiciones de los grupos de cadenas, ciclos, bordes y homología, así como los números de Betti asociadas a un complejo simplicial $K$:
+
+\begin{itemize}
+    \item Grupos de cadenas: $C_n(K)$ es el grupo libre abeliano generado por los $n$-símplices de $K$.
+    \item Aplicaciones frontera: $\func{d_n}{C_n(K)}{C_{n-1}(K)}$ definida por
+    \[
+        d_n(\{v_{k_0}, v_{k_1}, \ldots, v_{k_n}\}) = \sum_{i=0}^{n} (-1)^i \{v_{k_0}, \ldots, \hat{v}_{k_i}, \ldots, v_{k_n}\},
+    \]
+    donde $\hat{v}_{k_i}$ indica que el vértice $v_{k_i}$ se omite y $v_{k_0} < v_{k_1} < \cdots < v_{k_n}$.
+    \item Grupos de ciclos: $Z_n(K) = \ker(d_n)$.
+    \item Grupos de bordes: $B_n(K) = \operatorname{img}(d_{n+1})$.
+    \item Grupos de homología: $H_n(K) = Z_n(K) / B_n(K)$.
+    \item Números de Betti: $\beta_n = \rank(H_n(K)) = \rank(Z_n(K)) - \rank(B_n(K))$.
+\end{itemize}
+
+
+
+
+\begin{prob}
+    Determinar los números de Betti de un tetraedro hueco.\\
+
+    \centering
+    \begin{tikzpicture}[scale=0.95, every node/.style={font=\small}]
+
+  %--- Vértices ---
+  \node[inner sep=2pt,circle,fill=black] (v1) at (0,0)   {};
+  \node[inner sep=2pt,circle,fill=black] (v2) at (4,0)   {};
+  \node[inner sep=2pt,circle,fill=black] (v4) at (2,3)   {};
+  \node[inner sep=2pt,circle,fill=black] (v3) at (2,1) {};
+
+  %--- Aristas ---
+  \draw (v1) -- node[below] {$e_1$} (v2);
+  \draw (v1) -- node[left]  {$e_3$} (v4);
+  \draw (v2) -- node[right] {$e_5$} (v4);
+
+  \draw (v3) -- node[right] {$e_6$} (v4);
+  \draw (v1) -- node[left]  {$e_2$} (v3);
+  \draw (v2) -- node[right] {$e_4$} (v3);
+
+  %--- Etiquetas de vértices ---
+  \node[below left]  at (v1) {$v_1$};
+  \node[below right] at (v2) {$v_2$};
+  \node[above]       at (v4) {$v_4$};
+  \node[right]       at (v3) {$v_3$};
+
+  %--- Etiquetas de caras (color = color de la cara) ---
+  \node[] at (2,0.45) {$f_1$};
+  \node[]   at (2.4,2.8)  {$f_2$};
+  \node[]  at (1.3,1.45) {$f_3$};
+  \node[]    at (2.7,1.45) {$f_4$};
+
+
+\end{tikzpicture}
+\end{prob}
+Se puede visualizar el tetraedro en este enlace: \url{https://www.geogebra.org/classic/ujgvhmtn}.
+
+\begin{proof}
+    Para empezar, definamos el complejo simplicial que representa el tetraedro hueco, consideremos los vértices (0-símplices):
+    \[
+        K_0 = \big\{\{v_1\}, \{v_2\}, \{v_3\}, \{v_4\}\big\}.
+    \]
+    Con esto, las aristas (1-símplices) son:
+    \[
+        e_1 = \{v_1, v_2\}, \quad e_2 = \{v_1, v_3\}, \quad e_3 = \{v_1, v_4\}, \quad e_4 = \{v_2, v_3\}, \quad e_5 = \{v_2, v_4\}, \quad e_6 = \{v_3, v_4\}.
+    \]
+    Finalmente, las caras (2-símplices) son:
+    \[
+        f_1 = \{v_1, v_2, v_3\}, \quad f_2 = \{v_1, v_2, v_4\}, \quad f_3 = \{v_1, v_3, v_4\}, \quad f_4 = \{v_2, v_3, v_4\}.
+    \]
+    Así, el complejo simplicial completo del tetraedro hueco es:
+    \[
+        K = K_0 \cup \{e_1, e_2, e_3, e_4, e_5, e_6\} \cup \{f_1, f_2, f_3, f_4\}.
+    \]
+    Ahora, calculemos los grupos de cadenas:
+    \begin{align*}
+        C_0(K) & = \langle \{v_1\}, \{v_2\}, \{v_3\}, \{v_4\} \rangle \cong \mathbb{Z}^4 \\
+        C_1(K) & = \langle e_1, e_2, e_3, e_4, e_5, e_6 \rangle \cong \mathbb{Z}^6 \\
+        C_2(K) & = \langle f_1, f_2, f_3, f_4 \rangle \cong \mathbb{Z}^4\\
+        C_3(K) & = \{0\}.
+    \end{align*}
+    Además, las aplicaciones frontera son:
+    \[
+        \{0\} \xleftarrow{d_0} C_0(K) \xleftarrow{d_1} C_1(K) \xleftarrow{d_2} C_2(K) \xleftarrow{d_3} \{0\},
+    \]
+    o de manera específica:
+    \[
+        \func{d_0}{C_0(K)}{\{0\}}, \qquad \func{d_1}{C_1(K)}{C_0(K)}, \qquad \func{d_2}{C_2(K)}{C_1(K)} \texty \func{d_3}{\{0\}}{C_2(K)}.
+    \]
+    Estas aplicaciones se definen de la siguiente manera:
+    \[
+        d_0(v_i) = 0;\qquad d_1(e_i) = d_1(\{v_j, v_k\}) = \{v_j\} - \{v_k\},
+    \]
+    donde $j<k$; 
+    \[
+        d_2(f_i) = d_2(\{v_j, v_k, v_l\}) = \{v_k, v_l\} - \{v_j, v_l\} + \{v_j, v_k\},
+    \]
+    donde $j<k<l$; y $d_3(0) = 0$. Entonces, tenemos:
+    \begin{align*}
+        d_1(e_1) & = \{v_2\} - \{v_1\}, & d_1(e_4) & = \{v_3\} - \{v_2\},\\
+        d_1(e_2) & = \{v_3\} - \{v_1\}, & d_1(e_5) & = \{v_4\} - \{v_2\},\\
+        d_1(e_3) & = \{v_4\} - \{v_1\}, & d_1(e_6) & = \{v_4\} - \{v_3\}.
+    \end{align*}
+    y para las caras:
+    \begin{align*}
+        d_2(f_1) & = d_2(\{v_1, v_2, v_3\}) = \{v_2, v_3\} - \{v_1, v_3\} + \{v_1, v_2\} = e_4 - e_2 + e_1, \\
+        d_2(f_2) & = d_2(\{v_1, v_2, v_4\}) = \{v_2, v_4\} - \{v_1, v_4\} + \{v_1, v_2\} = e_5 - e_3 + e_1, \\
+        d_2(f_3) & = d_2(\{v_1, v_3, v_4\}) = \{v_3, v_4\} - \{v_1, v_4\} + \{v_1, v_3\} = e_6 - e_3 + e_2, \\
+        d_2(f_4) & = d_2(\{v_2, v_3, v_4\}) = \{v_3, v_4\} - \{v_2, v_4\} + \{v_2, v_3\} = e_6 - e_5 + e_4.
+    \end{align*}
+    De esta forma, tenemos que
+    \[
+        [d_0] = \begin{pmatrix}
+            0 & 0 & 0 & 0
+        \end{pmatrix}, \qquad
+        [d_1] = \begin{pmatrix}
+            -1 & -1 & -1 &  0 &  0 &  0 \\
+             1 &  0 &  0 & -1 & -1 &  0 \\
+             0 &  1 &  0 &  1 &  0 & -1 \\
+             0 &  0 &  1 &  0 &  1 &  1
+        \end{pmatrix},
+    \]
+    \[ 
+        [d_2] = \begin{pmatrix}
+             1 &  1 &  0 &  0 \\
+            -1 &  0 &  1 &  0 \\
+             0 & -1 & -1 &  0 \\
+             1 &  0 &  0 &  1 \\
+             0 &  1 &  0 & -1 \\
+             0 &  0 &  1 &  1
+        \end{pmatrix}, \qquad
+        [d_3] = \begin{pmatrix}
+            0 \\ 0 \\ 0 \\ 0
+        \end{pmatrix}.
+    \]
+    Con esto, calculemos los grupos de ciclos, de bordes y de homología, así como los números de Betti en cada dimensión:
+    \begin{itemize}
+    \item 
+        $Z_0(K) = \ker(d_0)$. Dado que $d_0$ es la aplicación cero, se tiene que
+        \[
+            Z_0(K) = \ker(d_0) = C_0(K) \cong \mathbb{Z}^4.
+        \]
+        Así, $\rank(Z_0(K)) = 4$.
+    \item 
+        $B_0(K) = \operatorname{img}(d_1)$. Tenemos que
+        \begin{align*}
+            \operatorname{img}(d_1) & = \langle d_1(e_1),\;  d_1(e_2), \; d_1(e_3),\;  d_1(e_4),\;  d_1(e_5),\;  d_1(e_6) \rangle.\\
+            & = \langle \{v_2\} - \{v_1\},\; \{v_3\} - \{v_1\},\; \{v_4\} - \{v_1\},\; \{v_3\} - \{v_2\},\; \{v_4\} - \{v_2\},\; \{v_4\} - \{v_3\} \rangle.
+        \end{align*}
+        Observemos que las últimas tres generadoras son combinaciones lineales de las primeras tres, por lo que
+        \[
+            B_0(K) = \langle\{v_2\} - \{v_1\}, \; \{v_3\} - \{v_1\}, \; \{v_4\} - \{v_1\}\rangle \cong \mathbb{Z}^3.
+        \]
+        Se puede demostrar que son linealmente independientes, por lo que $\rank(B_0(K)) = 3$.
+    \item
+        $H_0(K) = Z_0(K) / B_0(K)$. Por lo tanto,
+        \[
+            H_0(K) = Z_0(K) / B_0(K) \cong \mathbb{Z}^4 / \mathbb{Z}^3 \cong \mathbb{Z},
+        \]
+        y así, el número de Betti en dimensión 0 es:
+        \[
+            \beta_0 = \rank(H_0(K)) = \rank(Z_0(K)) - \rank(B_0(K)) = 4 - 3 = 1.
+        \]
+    \item 
+        $Z_1(K) = \ker(d_1)$. Tomemos $e\in C_1(K)$ tal que $d_1(e) = 0$. 
+        Así,
+        \begin{align*}
+            0 & = d_1(e)
+             = d_1(\alpha_1 e_1 + \alpha_2 e_2 + \alpha_3 e_3 + \alpha_4 e_4 + \alpha_5 e_5 + \alpha_6 e_6)\\
+            & = \alpha_1 (\{v_2\} - \{v_1\}) + \alpha_2 (\{v_3\} - \{v_1\}) + \alpha_3 (\{v_4\} - \{v_1\}) \\
+            & \phantom{=} + \alpha_4 (\{v_3\} - \{v_2\}) + \alpha_5 (\{v_4\} - \{v_2\}) + \alpha_6 (\{v_4\} - \{v_3\})\\
+            & = (-\alpha_1 - \alpha_2 - \alpha_3) \{v_1\} + (\alpha_1 - \alpha_4 - \alpha_5) \{v_2\} + (\alpha_2 + \alpha_4 - \alpha_6) \{v_3\} + (\alpha_3 + \alpha_5 + \alpha_6) \{v_4\}.
+        \end{align*}
+        De aquí, obtenemos el sistema de ecuaciones:
+        \begin{align*}
+            -\alpha_1 - \alpha_2 - \alpha_3 & = 0, \\
+             \alpha_1 - \alpha_4 - \alpha_5 & = 0, \\
+             \alpha_2 + \alpha_4 - \alpha_6 & = 0, \\
+             \alpha_3 + \alpha_5 + \alpha_6 & = 0.
+        \end{align*}
+        Resolviendo este sistema, obtenemos que
+        \[
+            \alpha_1 = \alpha_4 + \alpha_5, \quad \alpha_2 = -\alpha_4 + \alpha_6, \quad \alpha_3 = -\alpha_5 - \alpha_6,
+        \]
+        por lo tanto, 
+        \[
+            v = \alpha_4 (e_1 - e_2 + e_4) + \alpha_5 (e_1 - e_3 - e_4) + \alpha_6 (e_2 - e_3 + e_6).
+        \]
+        Así, 
+        \[
+           Z_1(K) = \langle e_1 - e_2 + e_4, \; e_1 - e_3 - e_4, \; e_2 - e_3 + e_6\rangle \cong \mathbb{Z}^3,
+        \]
+        de donde, $\rank(Z_1(K)) = 3$.
+    \item 
+        $B_1(K) = \operatorname{img}(d_2)$. Tenemos que
+        \begin{align*}
+            \operatorname{img}(d_2) & = \langle d_2(f_1),\; d_2(f_2),\; d_2(f_3),\; d_2(f_4) \rangle \\
+            & = \langle e_4 - e_2 + e_1, \; e_5 - e_3 + e_1, \; e_6 - e_3 + e_2, \; e_6 - e_5 + e_4 \rangle.
+        \end{align*}
+        Observemos que la última generadora es combinación lineal de las primeras tres, por lo que
+        \[
+            B_1(K) = \langle e_4 - e_2 + e_1, \; e_5 - e_3 + e_1, \; e_6 - e_3 + e_2\rangle \cong \mathbb{Z}^3.
+        \]
+        Se puede demostrar que son linealmente independientes, por lo que $\rank(B_1(K)) = 3$.
+    \item 
+        $H_1(K) = Z_1(K) / B_1(K)$. Por lo tanto,
+        \[
+            H_1(K) = Z_1(K) / B_1(K) \cong \mathbb{Z}^3 / \mathbb{Z}^3 \cong 0,
+        \]
+        y así, el número de Betti en dimensión 1 es:
+        \[
+            \beta_1 = \rank(H_1(K)) = \rank(Z_1(K)) - \rank(B_1(K)) = 3 - 3 = 0.
+        \]
+    \item 
+        $Z_2(K) = \ker(d_2)$. Tomemos $f\in C_2(K)$ tal que $d_2(f) = 0$. Así,
+        \begin{align*}
+            0 & = d_2(f)
+             = d_2(\beta_1 f_1 + \beta_2 f_2 + \beta_3 f_3 + \beta_4 f_4)\\
+            & = \beta_1 (e_4 - e_2 + e_1) + \beta_2 (e_5 - e_3 + e_1) + \beta_3 (e_6 - e_3 + e_2) + \beta_4 (e_6 - e_5 + e_4)\\
+            & = (\beta_1 + \beta_2) e_1 + (-\beta_1 + \beta_3) e_2 + (-\beta_2 - \beta_3) e_3 + (\beta_1 + \beta_4) e_4 + (\beta_2 - \beta_4) e_5 + (\beta_3 + \beta_4) e_6.
+        \end{align*}
+        De aquí, obtenemos el sistema de ecuaciones:
+        \begin{align*}
+            \beta_1 + \beta_2 & = 0, \\
+            -\beta_1 + \beta_3 & = 0, \\
+            -\beta_2 - \beta_3 & = 0, \\
+            \beta_1 + \beta_4 & = 0, \\
+            \beta_2 - \beta_4 & = 0, \\
+            \beta_3 + \beta_4 & = 0.
+        \end{align*}
+        Resolviendo este sistema, obtenemos que la única solución es la trivial:
+        \[
+            \beta_1 = -\beta_4, \quad \beta_2 = \beta_4, \quad \beta_3 = -\beta_4,
+        \]
+        por lo tanto,
+        \[
+           f = -\beta_4 (f_1 - f_2 + f_3 + f_4).
+        \]
+        Así, 
+        \[
+            Z_1(K) = \langle f_1 - f_2 + f_3 + f_4 \rangle \cong \mathbb{Z},
+        \]
+        de donde, $\rank(Z_2(K)) = 1$.
+    \item 
+        $B_2(K) = \operatorname{img}(d_3)$. Dado que $C_3(K) = \{0\}$, se tiene que
+        \[
+            B_2(K) = \operatorname{img}(d_3) = \{0\}.
+        \]
+        Por lo tanto, $\rank(B_2(K)) = 0$.
+    \item 
+        $H_2(K) = Z_2(K) / B_2(K)$. Por lo tanto,
+        \[
+            H_2(K) = Z_2(K) / B_2(K) \cong \mathbb{Z} / 
+            B_2(K) = \operatorname{img}(d_3) = \{0\} \cong \mathbb{Z},
+        \]
+        y así, el número de Betti en dimensión 2 es:
+        \[
+            \beta_2 = \rank(H_2(K)) = \rank(Z_2(K)) - \rank(B_2(K)) = 1 - 0 = 1.
+        \]
+    \end{itemize}
+    Así, los números de Betti del tetraedro hueco son:
+    \[
+        \beta_0 = 1, \quad \beta_1 = 0, \quad \beta_2 = 1.\qedhere
+    \]
+\end{proof}
+
+
+\end{document}

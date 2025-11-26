@@ -1,0 +1,53 @@
+% configuración.tex
+
+% -- Paquetes adicionales
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{aleph-comandos}
+\usepackage{graphicx}
+\usepackage{mathpazo}
+\usepackage{background}
+
+% Geometría para Cuadrado
+\usepackage[papersize={80mm,80mm},hmargin=0.5cm,vmargin=0.5cm]{geometry}
+\backgroundsetup{
+    scale=1.2,
+    color=black,
+    opacity=0.4,
+    angle=0,
+    hshift=-1mm,
+    vshift=0mm,
+    contents={\includegraphics[width=80mm]{FondoEjercicio.jpg}}
+}
+
+% Definición de color personalizado
+\definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+
+% --- Comandos personalizados para simplificar el contenido ---
+\newcommand{\titulo}[2][0mm]{
+    \thispagestyle{empty}
+    
+    \vspace*{-10mm}
+    \vspace*{#1}
+    \color{colordef}
+    \begin{center}
+        {\large
+        \textbf{\textsc{Ejercicio}}\\[2mm]
+        \textbf{\textsc{#2}}
+        }
+    \end{center}
+}
+
+\newcommand{\problema}[3][\fill]{
+    \vspace*{#1}
+    \noindent
+    \textbf{Problema #2:} #3
+}
+
+\newcommand{\logo}{
+    \vspace{\fill}
+    \noindent
+    \hspace{\fill}
+    \includegraphics[height=0.8cm]{Logos/LogoAlephsub0-02.png}
+}
