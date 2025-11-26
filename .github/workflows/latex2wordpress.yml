@@ -8,8 +8,6 @@ on:
 env:
   PROBLEMA_PATH: ./test/file.tex
   USUARIO: ${{ secrets.USUARIO }}
-  USUARIO_SERV: ${{ secrets.USUARIO_SERV }}
-  CONTRASENIA_SERV: ${{ secrets.CONTRASENIA_SERV }}
   CONTRASENIA: ${{ secrets.CONTRASENIA }}
   CLOUDFLARE_ZONE_ALEPH: ${{ secrets.CLOUDFLARE_ZONE_ALEPH }}
   CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
