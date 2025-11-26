@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  PROBLEMA_PATH: ./Otros/MetricaInterliving.tex
+  PROBLEMA_PATH: ./test/file.tex
   USUARIO: ${{ secrets.USUARIO }}
   USUARIO_SERV: ${{ secrets.USUARIO_SERV }}
   CONTRASENIA_SERV: ${{ secrets.CONTRASENIA_SERV }}
