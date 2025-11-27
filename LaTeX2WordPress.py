@@ -236,7 +236,7 @@ if __name__ == "__main__":
 
     zona_id = os.getenv("CLOUDFLARE_ZONE_ALEPH")
 
-    headers_clouflare = {"Content-Type": "application/json", "Authorization": f"Bearer {token}"}
+    headers_clouflare = {"Content-Type": "application/json", "Authorization": f"Bearer {os.getenv("CLOUDFLARE_TOKEN")}"}
 
     url_cloudflare = f"https://api.cloudflare.com/client/v4/zones/{zona_id}/firewall/access_rules/rules"
 
@@ -257,4 +257,5 @@ if __name__ == "__main__":
 
         # Eliminar la regla del firewall
         eliminar_regla_ip(identificador_regla, headers_clouflare, zona_id)
+
 
