@@ -1,0 +1,132 @@
+\documentclass[a4,10pt]{aleph-notas}
+
+% -- Paquetes adicionales
+\usepackage{enumitem}
+\usepackage{aleph-comandos}
+
+% -- Datos
+\institucion{Proyecto Alephsub0}
+\asignatura{Matemáticas de la Información}
+\tema{Capacidad de un canal con regenerador ternario}
+\autor{Andrés Merino}
+\fecha{Abril 2026}
+
+\fuente{montserrat}
+\logouno[4.5cm]{Logos/LogoAlephsub0-02}
+\definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+
+% -- Comandos adicionales
+\newtheorem*{prob}{Problema}
+    \tcolorboxenvironment{prob}{%
+        color=colordef,recuadrost,colback=colordef!7,drop fuzzy shadow
+    }
+
+\begin{document}
+
+\encabezado
+
+\begin{prob}
+Consideremos un sistema de transmisión de datos con entrada
+\(X\in\{1,0,-1\}\), donde las probabilidades de los símbolos de entrada son:
+\[
+    P(X=1)=\alpha,\qquad P(X=0)=1-2\alpha,\qquad P(X=-1)=\alpha,
+\]
+con \(0<\alpha\le \frac{1}{2}\). El regenerador mantiene los símbolos no borrados y reconstruye los borrados
+\((X=0)\) en proporción a la frecuencia de \(1\) y \(-1\).
+
+Determinar la capacidad del canal (en bits por símbolo).
+\end{prob}
+
+\begin{proof}
+Dado que el regenerador mantiene los símbolos no borrados y reconstruye los borrados en proporción a la frecuencia, se tiene:
+\begin{align*}
+    P(Y=1\mid X=1)&=1,& P(Y=-1\mid X=1)&=0,\\
+    P(Y=1\mid X=-1)&=0,& P(Y=-1\mid X=-1)&=1,\\
+    P(Y=1\mid X=0)&=\frac{\alpha}{2\alpha}=\frac{1}{2},&
+    P(Y=-1\mid X=0)&=\frac{\alpha}{2\alpha}=\frac{1}{2}.
+\end{align*}
+Equivalente en forma matricial (filas: \(X=1,0,-1\); columnas: \(Y=1,-1\)):
+\[
+    \begin{pmatrix}
+    1 & 0 \\
+    \frac{1}{2} & \frac{1}{2} \\
+    0 & 1
+    \end{pmatrix}.
+\]
+
+Por el segundo teorema de Shannon, la capacidad es
+\[
+    C=\max_{P_X} I(X;Y).
+\]
+Para calcular la información mutua usamos
+\[
+    I(X;Y)=H(Y)-H(Y\mid X).
+\]
+
+Primero obtenemos la distribución de salida. Por la ley de la probabilidad total,
+\begin{align*}
+    P(Y=1)
+        &=P(Y=1\mid X=1)P(X=1)+P(Y=1\mid X=0)P(X=0)+P(Y=1\mid X=-1)P(X=-1)\\
+        &=1\cdot \alpha+\frac{1}{2}(1-2\alpha)+0\cdot \alpha\\
+        &=\alpha+\frac{1}{2}-\alpha\\
+        &=\frac{1}{2}.
+\end{align*}
+De manera análoga,
+\[
+P(Y=-1)=\frac{1}{2}.
+\]
+
+Así, \(Y\) es uniforme en \(\{1,-1\}\), y por tanto
+\[
+    H(Y)=-\frac{1}{2}\log_2\left(\frac{1}{2}\right)-\frac{1}{2}\log_2\left(\frac{1}{2}\right)=1.
+\]
+
+Calculamos ahora la entropía condicional para cada valor de \(X\):
+\begin{itemize}
+    \item Si \(X=0\), entonces \(Y\) toma los valores \(1\) y \(-1\) con probabilidad \(1/2\) cada uno, luego
+    \begin{align*}
+    H(Y\mid X=0)
+        &= - P(Y=1\mid X=0)\log_2\left( P(Y=1\mid X=0)\right) \\
+        & \phantom{=}- P(Y=-1\mid X=0)\log_2\left( P(Y=-1\mid X=0) \right)\\
+        &= - \frac{1}{2}\log_2\left(\frac{1}{2}\right) 
+        - \frac{1}{2}\log_2\left(\frac{1}{2}\right) = 1.
+    \end{align*}
+    \item Si \(X=1\), entonces \(Y=1\) con probabilidad \(1\), luego no hay incertidumbre:
+    \[
+        H(Y\mid X=1)=0.
+    \]
+    \item Si \(X=-1\), entonces \(Y=-1\) con probabilidad \(1\), luego tampoco hay incertidumbre:
+    \[
+        H(Y\mid X=-1)=0.
+    \]
+
+\end{itemize}
+
+Por la fórmula de entropía condicional,
+\begin{align*}
+    H(Y\mid X)
+        &=P(X=1)H(Y\mid X=1)+P(X=0)H(Y\mid X=0)+P(X=-1)H(Y\mid X=-1)\\
+        &=\alpha\cdot 0+(1-2\alpha)\cdot 1+\alpha\cdot 0\\
+        &=1-2\alpha.
+\end{align*}
+
+Sustituyendo en la expresión de información mutua,
+\begin{align*}
+    I(X;Y)
+        &=H(Y)-H(Y\mid X)\\
+        &=1-(1-2\alpha)\\
+        &=2\alpha.
+\end{align*}
+
+Con esto, el valor máximo de $I$ en el intervalo \(0<\alpha\le \frac{1}{2}\) se alcanza en $\alpha=\frac{1}{2}$, en ese caso,
+\[
+    I(X;Y)=2\cdot \frac{1}{2}=1.
+\]
+Por consiguiente, la capacidad del canal es
+\[
+    C=1\text{ bit por símbolo}.\qedhere
+\]
+\end{proof}
+
+
+\end{document}
