@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  PROBLEMA_PATH: ./CompCuantica/MI01-Capacidad.tex
+  PROBLEMA_PATH: ./Otros/JerarquiaVN.tex
   USUARIO: ${{ secrets.USUARIO }}
   CONTRASENIA: ${{ secrets.CONTRASENIA }}
   CLOUDFLARE_ZONE_ALEPH: ${{ secrets.CLOUDFLARE_ZONE_ALEPH }}

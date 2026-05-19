@@ -1,17 +1,24 @@
 \documentclass[11pt]{article}
 
 % Importar la configuración
-% \input{formatoPortadaC}
-\input{formatoPortadaR}
+\input{formatoPortadaC}
+% \input{formatoPortadaR}
 
 \begin{document}
 
-\titulo{Matemática de la Información}
+\titulo{Jerarquía de von Neumann}
 
-\problema[-3mm]{}{Consideremos un sistema de transmisión de datos con entrada \(\{1,0,-1\}\), donde las probabilidades de los símbolos de entrada son $\alpha$, $1-2\alpha$ y $\alpha$, respectivamente. El regenerador reconstruye los borrados \((0)\) en proporción a la frecuencia de \(1\) y \(-1\).
+\problema[-3mm]{}{Definimos, de manera recursiva:
+    $$V_0=\varnothing,\quad 
+    V_{\alpha+1}=\mathcal{P}(V_\alpha),$$ $$
+    V_\gamma=\displaystyle\bigcup\{V_\beta:\beta<\gamma\}$$ para $\alpha$ un ordinal y $\gamma$ un ordinal límite.
 
-\vspace{1mm}
-\noindent Determinar la capacidad del canal (en bits por símbolo).}
+\vspace{5mm}
+\noindent Probar que 
+    $
+        \displaystyle\bigcup\{V_\alpha:\alpha\in\mathrm{ON}\}
+    $
+    es la clase universal.}
 
 % \vspace{2mm}
 % {\scriptsize

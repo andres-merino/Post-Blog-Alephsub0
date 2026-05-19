@@ -1,0 +1,125 @@
+\documentclass[a4,10pt]{aleph-notas}
+
+% -- Paquetes adicionales
+\usepackage{enumitem}
+\usepackage{aleph-comandos}
+
+% -- Datos
+% El siguiente texto presenta la definición de la jerarquía acumulativa de von Neumann
+% y demuestra que sus niveles cubren todos los conjuntos (la clase universal).
+% Adaptación y exposición didáctica basada en el tratamiento estándar (ver Corolario 1.3.6).
+\institucion{Proyecto Alephsub0}
+\asignatura{Matemáticas de la Información}
+\tema{Jerarquía de von Neumann: definición y universalidad}
+\autor{Andrés Merino}
+\fecha{Abril 2026}
+
+% Fuente tipográfica y logotipo
+\fuente{montserrat}
+\logouno[4.5cm]{Logos/LogoAlephsub0-02}
+\definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+
+% -- Comandos adicionales
+\newtheorem*{prob}{Problema}
+    \tcolorboxenvironment{prob}{%
+        color=colordef,recuadrost,colback=colordef!7,drop fuzzy shadow
+    }
+
+
+\begin{document}
+
+
+\encabezado
+
+\noindent
+El siguiente problema corresponde al Ejemplo 1.3.7 del libro Introduction to Cardinal Aritmetic de M. Holz. Primero, presentemos algunas definiciones:
+
+\begin{defi}
+    Definimos, de manera recursiva:
+    \begin{enumerate}
+        \item $V_0=\varnothing$.
+        \item $V_{\alpha+1}=\mathcal{P}(V_\alpha)$ para todo ordinal $\alpha$.
+        \item Si $\gamma$ es un ordinal límite, entonces $V_\gamma=\bigcup\{V_\beta:\beta<\gamma\}$.
+    \end{enumerate}
+    Los conjuntos $V_\alpha$ se llaman niveles de la jerarquía de von Neumann y la función $(V_\alpha:\alpha\in\mathrm{ON})$ se denomina jerarquía (o jerarquía acumulativa).
+\end{defi}
+
+\begin{lem}
+    Sean \(\alpha\) y \(\beta\) ordinales tales que \(\alpha\leq \beta\). Entonces
+    \[
+        V_\alpha\subseteq V_\beta.
+    \]
+\end{lem}
+
+\begin{prob}
+    Probar que la clase 
+    \[
+        \bigcup\{V_\alpha:\alpha\in\mathrm{ON}\}
+    \]
+    es la clase universal.
+\end{prob}
+
+\begin{proof}
+Por reducción al absurdo, supongamos que existe un conjunto \(x\) tal que
+\[
+    x\notin V := \bigcup\{V_\alpha:\alpha\in\mathrm{ON}\}.
+\]
+De esta manera, se tiene que la clase
+\[
+    V^{c}=\left\{x:x\notin V\right\} \neq \varnothing.
+\]
+Por el axioma de regularidad, existe \(a\in V^c\) tal que
+\[
+    a\cap V^c=\varnothing.
+\]
+Luego, si \(y\in a\), entonces \(y\notin V^c\). Por lo tanto,
+\[
+    y\in V.
+\]
+Así, para cada \(y\in a\), existe un ordinal \(\alpha_y\) tal que
+\[
+    y\in V_{\alpha_y}.
+\]
+
+Por el axioma de reemplazo, la clase
+\[
+    \{\alpha_y:y\in a\}
+\]
+es un conjunto de ordinales. Entonces existe un ordinal \(\beta\) tal que
+\[
+    \alpha_y<\beta
+\]
+para todo \(y\in a\). De aquí se sigue que
+\[
+    y\in V_\beta
+\]
+para todo \(y\in a\). Por tanto,
+\[
+    a\subseteq V_\beta.
+\]
+Luego,
+\[
+    a\in \mathcal{P}(V_\beta)=V_{\beta+1}.
+\]
+En particular, \(a\in V\), lo cual contradice que \(a\in V^c\).
+
+Por lo tanto, \(V^c=\varnothing\). En consecuencia,
+\[
+    V=\bigcup\{V_\alpha:\alpha\in\mathrm{ON}\}
+\]
+es la clase universal.
+\end{proof}
+
+\begin{obs}
+    En la demostración anterior no es necesario utilizar el axioma de elección. En efecto, para cada \(y\in a\), como \(y\in V\), existe al menos un ordinal \(\alpha\) tal que
+    \[
+        y\in V_\alpha.
+    \]
+    Como la clase de los ordinales está bien ordenada por \(\in\), existe un único ordinal mínimo con esta propiedad. Es decir, podemos definir
+    \[
+        \alpha_y=\min\{\alpha\in\mathrm{ON}:y\in V_\alpha\}.
+    \]
+    De esta manera, la asignación \(y\mapsto \alpha_y\) queda definida, sin realizar elecciones arbitrarias.
+\end{obs}
+
+\end{document}
