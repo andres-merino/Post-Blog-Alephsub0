@@ -1,0 +1,152 @@
+\documentclass[a4,10pt]{aleph-notas}
+
+% -- Paquetes adicionales
+\usepackage{enumitem}
+\usepackage{aleph-comandos}
+
+% -- Datos
+% El siguiente texto presenta la definición de la jerarquía acumulativa de von Neumann
+% y demuestra que sus niveles cubren todos los conjuntos (la clase universal).
+% Adaptación y exposición didáctica basada en el tratamiento estándar (ver Corolario 1.3.6).
+\institucion{Proyecto Alephsub0}
+\asignatura{Matemáticas de la Información}
+\tema{Jerarquía de von Neumann: definición y universalidad}
+\autor{Andrés Merino}
+\fecha{Abril 2026}
+
+% Fuente tipográfica y logotipo
+\fuente{montserrat}
+\logouno[4.5cm]{Logos/LogoAlephsub0-02}
+\definecolor{colordef}{cmyk}{0.81,0.62,0.00,0.22}
+
+% -- Comandos adicionales
+\newtheorem*{prob}{Problema}
+    \tcolorboxenvironment{prob}{%
+        color=colordef,recuadrost,colback=colordef!7,drop fuzzy shadow
+    }
+
+
+\begin{document}
+
+
+\encabezado
+
+\noindent
+% El siguiente problema corresponde al Ejemplo 1.3.7 del libro Introduction to Cardinal Aritmetic de M. Holz. Primero, presentemos algunas definiciones:
+
+\begin{prob}
+Sea $V=\mathbb{C}^2$ con la base
+\[
+    \mathcal{B}=\left\{
+        b_1=\begin{pmatrix}1\\ i\end{pmatrix},
+        b_2=\begin{pmatrix}1\\ -i\end{pmatrix}
+    \right\}.
+\]
+\begin{enumerate}
+    \item Encontrar la base dual $\mathcal{B}^*$.
+    \item Expresar el funcional $f(x,y)=x+2y$ como combinación lineal de $\mathcal{B}^*$.
+    \item Calcular
+    \[
+        b_1^*\begin{pmatrix}2+i\\ 1-i\end{pmatrix}
+        \quad \text{y} \quad
+        b_2^*\begin{pmatrix}2+i\\ 1-i\end{pmatrix}.
+    \]
+\end{enumerate}
+\end{prob}
+
+\begin{proof}
+Sea $\mathcal{B}^*=\{b_1^*,b_2^*\}$ la base dual de $\mathcal{B}$. Por definición,
+\[
+    b_i^*(b_j)=\delta_{ij}.
+\]
+
+Para encontrar $b_1^*$, escribimos
+\[
+    b_1^*(x,y)=\alpha x+\beta y.
+\]
+Como $b_1^*(b_1)=1$ y $b_1^*(b_2)=0$, se tiene
+\[
+    \alpha+i\beta=1,
+    \qquad
+    \alpha-i\beta=0.
+\]
+Resolviendo el sistema,
+\[
+    \alpha=\frac{1}{2},
+    \qquad
+    \beta=-\frac{i}{2}.
+\]
+Por tanto,
+\[
+    b_1^*(x,y)=\frac{1}{2}x-\frac{i}{2}y.
+\]
+
+De forma análoga, para $b_2^*$ escribimos
+\[
+    b_2^*(x,y)=\alpha x+\beta y.
+\]
+Como $b_2^*(b_1)=0$ y $b_2^*(b_2)=1$, se tiene
+\[
+    \alpha+i\beta=0,
+    \qquad
+    \alpha-i\beta=1.
+\]
+Resolviendo el sistema,
+\[
+    \alpha=\frac{1}{2},
+    \qquad
+    \beta=\frac{i}{2}.
+\]
+Así,
+\[
+    b_2^*(x,y)=\frac{1}{2}x+\frac{i}{2}y.
+\]
+Por tanto,
+\[
+    \mathcal{B}^*
+    =
+    \left\{
+        b_1^*(x,y)=\frac{1}{2}x-\frac{i}{2}y,
+        \quad
+        b_2^*(x,y)=\frac{1}{2}x+\frac{i}{2}y
+    \right\}.
+\]
+
+Ahora expresamos $f(x,y)=x+2y$ como combinación lineal de la base dual:
+\[
+    f=\lambda b_1^*+\mu b_2^*.
+\]
+Como los coeficientes en la base dual se obtienen evaluando $f$ en los vectores de la base original,
+\[
+    \lambda=f(b_1)=f(1,i)=1+2i,
+\]
+y
+\[
+    \mu=f(b_2)=f(1,-i)=1-2i.
+\]
+Por tanto,
+\[
+    f=(1+2i)b_1^*+(1-2i)b_2^*.
+\]
+
+Finalmente,
+\[
+    b_1^*\begin{pmatrix}2+i\\ 1-i\end{pmatrix}
+    =
+    \frac{1}{2}(2+i)-\frac{i}{2}(1-i)
+    =
+    \frac{1}{2},
+\]
+y
+\[
+    b_2^*\begin{pmatrix}2+i\\ 1-i\end{pmatrix}
+    =
+    \frac{1}{2}(2+i)+\frac{i}{2}(1-i)
+    =
+    \frac{3}{2}+i.
+\]
+\end{proof}
+
+
+
+\end{document}

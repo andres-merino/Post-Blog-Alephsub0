@@ -1,24 +1,41 @@
 \documentclass[11pt]{article}
 
 % Importar la configuración
-\input{formatoPortadaC}
-% \input{formatoPortadaR}
+% \input{formatoPortadaC}
+\input{formatoPortadaR}
+\usepackage{quantikz}
 
 \begin{document}
 
-\titulo{Jerarquía de von Neumann}
+\titulo{Codificación superdensa}
 
-\problema[-3mm]{}{Definimos, de manera recursiva:
-    $$V_0=\varnothing,\quad 
-    V_{\alpha+1}=\mathcal{P}(V_\alpha),$$ $$
-    V_\gamma=\displaystyle\bigcup\{V_\beta:\beta<\gamma\}$$ para $\alpha$ un ordinal y $\gamma$ un ordinal límite.
-
-\vspace{5mm}
-\noindent Probar que 
-    $
-        \displaystyle\bigcup\{V_\alpha:\alpha\in\mathrm{ON}\}
-    $
-    es la clase universal.}
+\problema[1mm]{}{
+    Realizar la derivación matemática de la codificación superdensa.
+\begin{center}
+\begin{quantikz}[row sep=0.4cm, column sep=0.5cm, 
+    % slice all, slice style={draw=teal}
+    ]
+    \lstick{$q_A:\ket{0}$}
+        & \gate{H}
+        & \ctrl{1}
+        & \gate{Z^aX^b}
+        % \slice{envío de cúbit}
+        & \ctrl{1}
+        & \gate{H}
+        & \meter{}
+        & \rstick{$a$}
+        \\
+    \lstick{$q_B:\ket{0}$}
+        & \qw
+        & \targ{}
+        & \qw
+        & \targ{}
+        & \qw
+        & \meter{}
+        & \rstick{$b$}
+\end{quantikz}
+\end{center}
+}
 
 % \vspace{2mm}
 % {\scriptsize
