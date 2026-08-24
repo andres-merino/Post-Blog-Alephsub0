@@ -6,7 +6,7 @@ on:
       - main
 
 env:
-  PROBLEMA_PATH: ./CompCuantica/CC02Teleportacion.tex
+  PROBLEMA_PATH: ./CompCuantica/CC03-Deutsch.tex
   USUARIO: ${{ secrets.USUARIO }}
   CONTRASENIA: ${{ secrets.CONTRASENIA }}
   CLOUDFLARE_ZONE_ALEPH: ${{ secrets.CLOUDFLARE_ZONE_ALEPH }}

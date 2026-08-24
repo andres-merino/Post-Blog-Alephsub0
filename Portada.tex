@@ -7,45 +7,27 @@
 
 \begin{document}
 
-\titulo{Teleportación cuántica}
+\titulo{Algoritmo de Deutsch}
 
 \problema[0mm]{
-    Realizar la derivación matemática de la teleportación cuántica.
+    Realizar la derivación matemática del Algoritmo de Deutsch.
 \begin{center}
-\begin{quantikz}[row sep=0.2cm, column sep=0.35cm, 
+\begin{quantikz}[row sep=0.6cm, column sep=0.5cm, 
     % slice all, slice style={draw=teal}
     ]
-    \lstick{$q_0:\ket{\psi}\phantom{_i}$}
-        & \qw
-        & \qw
-        & \ctrl{1}
+    \lstick{$\ket{0}$}
         & \gate{H}
-        % \slice{Medición de Alice}
-        & \meter{}
-        & \setwiretype{c}
-        & \cw
-        & \rstick{$m_1$}
-        \\
-    \lstick{$q_1:\ket{0}_A$}
+        & \gate[wires=2]{U_f}
         & \gate{H}
-        & \ctrl{1}
-        % \slice{distribución de cúbits}
-        & \targ{}
-        & \qw
         & \meter{}
-        & \setwiretype{c}
-        & \cw
-        & \rstick{$m_2$}
+        & \rstick{$z$}
         \\
-    \lstick{$q_2:\ket{0}_B$}
+    \lstick{$\ket{1}$}
+        & \gate{H}
+        & 
         & \qw
-        & \targ{}
         & \qw
-        & \qw
-        & \qw
-        & \gate{X^{m_2}}
-        & \gate{Z^{m_1}}
-        & \rstick{$\ket{\psi}$}
+        & \rstick{$\ket{-}$}
 \end{quantikz}
 \end{center}
 }
